@@ -1,0 +1,48 @@
+CNN:
+
+VARIATION 1:
+Parameter values used:
+1. Hyperparameters: Filter sizes, kernel sizes, padding, and activation functions in Conv2D layers affect model capacity and learning dynamics.
+2. Activation Function: ReLU used in Conv2D and Dense layers for nonlinear behavior and addressing vanishing gradients.
+3. Number of Layers: Multiple Conv2D and MaxPooling2D layers in 5 blocks for hierarchical feature extraction and downsampling. Followed by 3 Dense layers for classification, with softmax activation for multi-class.
+4. Optimizer: Adamax with a learning rate of 0.001 for faster convergence and stable training.
+
+VARIATION 2:
+Parameter values used:
+1. Hyperparameters: Learning rate 0.001, batch size 32, dropout rate 0.5, L2 regularization 0.001, chosen empirically.
+2. Activation Function: LeakyReLU (alpha 0.1) used after Conv2D layers to mitigate vanishing gradients.
+3. Number of Layers: VGG-like architecture with 5 blocks of Conv2D, MaxPooling2D, BatchNormalization, followed by 2 Dense layers with LeakyReLU and Dropout.
+4. Optimizer: Adam optimizer (lr 0.001) for adaptive learning rate.
+5. Regularization: L2 regularization (0.001) on Dense layer kernel weights, Dropout layers (rate 0.5) for further regularization.
+
+EfficientNetB3:
+  
+VARIATION 1:
+Parameter values used:
+1. Hyperparameters: Dropout rate 0.45, fixed seed 123. Dropout helps prevent overfitting by randomly dropping input units during training.
+2. Activation Function: ReLU used in the hidden Dense layer for faster convergence and addressing vanishing gradients.
+3. Number of Layers: Three layers sequentially: EfficientNetB3 base model, BatchNormalization, Dense layer (256 neurons, ReLU), Dropout layer, and output Dense layer (softmax).
+4. Optimizer: Adamax optimizer (lr 0.001) for stable training, less sensitive to learning rate decay.
+5. Regularization: L2 regularization (coef 0.016) on first Dense layer kernel weights, L1 regularization (coef 0.006) on activity and bias of the same layer to prevent overfitting.
+
+VARIATION 2:
+Model creation code:
+Activation function: relu and softmax
+Optimizer: Adamax
+Parameter values used:
+1. Hyperparameters: Dropout rates of 0.4 and 0.3 chosen empirically for balancing overfitting prevention and model expressiveness.
+2. Activation Function: ReLU used in hidden layers for faster convergence and addressing vanishing gradients.
+3. Number of Layers: Three Dense layers on top of EfficientNetB3 base model, with 512 and 256 neurons in hidden layers, and output layer matching dataset classes.
+4. Optimizer: Adamax optimizer (lr 0.001) for stable training, less sensitive to learning rate decay.
+5. Regularization: L2 regularization (coef 0.01) on hidden Dense layers' kernel weights to prevent overfitting and improve generalization.
+
+VARIATION 3:
+Model creation code:
+Activation function: sigmoid
+Optimizer: Adam
+Parameter values are used:
+1. Hyperparameters: Dropout rate 0.4 chosen for regularization, randomly dropping 40% of input units during training.
+2. Activation Function: ReLU used in Dense layers for addressing vanishing gradients and faster convergence.
+3. Number of Layers: Three Dense layers on EfficientNetB3 base model, with 1024 and 512 neurons, followed by Dropout layers for regularization. Output layer with sigmoid activation for class probabilities.
+4. Optimizer: Adam optimizer (lr 0.0001) for adaptive learning rate and stable training.
+5. Regularization: Dropout layers (rate 0.4) used for preventing overfitting by encouraging model generalization. No explicit weight regularization applied.
